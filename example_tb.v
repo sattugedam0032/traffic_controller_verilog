@@ -42,14 +42,30 @@ module example_tb;
   // Test procedure
   initial begin
    
-    $monitor("Time: %0d | state: %0d | next_state: %0d | ID: %b | maxout: %0d", $time, state, next_state, ID, maxout);
+    $monitor("Time: %0d | state: %0d | ID: %b ", $time, state, ID);
 
     
     
-    #5  a1=0; a2=0;a3=0;b1=0;b2=0;b3=0;c1=0;c2=0;c3=0;d1=0;d2=0;d3=0;ss1=0;ss2=0;ss4=0;ss3 = 1;
-    #5  a1 = 0; b1 = 1 ; b2 = 1 ; ss3 = 0;
-    #5  a1 =1 ; b1 =0; b2 =0; c1 =1;
-    #5  ss2 = 1; a1 =1;
+    #10 a1=1'b0; a2=1'b0; a3=1'b0;
+    b1=1'b0; b2=1'b0; b3=1'b0;
+    c1=1'b0; c2=1'b0; c3=1'b0;
+    d1=1'b0; d2=1'b0; d3=1'b0;
+    ss1=1'b0; ss2=1'b0; ss3=1'b0; ss4=1'b0;
+
+    #10 ss3 = 1'b1; // Set ss3 high
+
+    #10 ss3 = 1'b0; // Set ss3 low
+    b1 = 1'b1;  // Set b1 high
+    b2 = 1'b1;  // Set b2 high
+
+    #10 a1 = 1'b1;  // Set a1 high
+    b1 = 1'b0;  // Set b1 low
+    b2 = 1'b0;  // Set b2 low
+    c1 = 1'b1;  // Set c1 high
+
+    #10 ss2 = 1'b1; // Set ss2 high
+    a1 = 1'b1;  // Keep a1 high
+
     $finish;
   end
   
