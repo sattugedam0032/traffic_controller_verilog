@@ -29,29 +29,34 @@
 
 
 module example (ID, clock, state, next_state,clear, maxout,a1,a2,a3,b1,b2,b3,c1,c2,c3,d1,d2,d3,ss1,ss2,ss3,ss4);
+    
+    input clear,clock,a1,a2,a3,b1,b2,b3,c1,c2,c3,d1,d2,d3,ss1,ss2,ss3,ss4;
+    
     output reg [11:0]ID;
     output reg [5:0]state;
     output reg [5:0]next_state;
     output reg [2:0]maxout;
 
-    // input clear,clock,a1,a2,a3,b1,b2,b3,c1,c2,c3,d1,d2,d3,ss1,ss2,ss3,ss4;
+    
     // wire[2:0] max_out;
     // find_max fm_inst(a1,a2,a3,b1,b2,b3,c1,c2,c3,d1,d2,d3,max_out);
 
    initial begin
-    state = s0;
-    next_state = s0;
+    state = `s0;
+    next_state = `s0;
     ID = 12'b100100100100;
    end
 
-   always @(posedge clock or posedge clear) begin
-    if (clear)
-        state <= `s0; // Reset the state to `s0 when clear is high
-    else
-        state <= next_state; // Update state to next_state
-   end
-   
+  //  always @(posedge clock) begin
+  //   if (clear)
+  //       state <= `s0; // Reset the state to `s0 when clear is high
+  //   else
+  //       state <= next_state; // Update state to next_state
+  //  end
 
+   always @(posedge clock)
+    state = next_state;
+   
    always @(state) begin
      case (state)
        `s0 : begin
@@ -151,7 +156,7 @@ module example (ID, clock, state, next_state,clear, maxout,a1,a2,a3,b1,b2,b3,c1,
                 if(ss1 || ss2 || ss3 || ss4)
                   next_state = `s22;
 
-                if (a1 || b1 || c1 || d1) 
+               else if (a1 || b1 || c1 || d1) 
                   next_state = `s1;
          
                 else
